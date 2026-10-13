@@ -18,12 +18,19 @@ public class UserService {
 
     public User registerUser(User user) {
 
-        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
+        if (user.getEmail() == null || user.getEmail().isBlank()) {
             throw new ResponseStatusException(
-                    HttpStatus.CONFLICT,
-                    "Email already registered"
-            );
+                    HttpStatus.BAD_REQUEST, "Email is required");
         }
+
+        String email = user.getEmail().trim().toLowerCase();
+
+        if (userRepository.findByEmail(email).isPresent()) {
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT, "Email already registered");
+        }
+
+        user.setEmail(email);
 
         if (user.getRole() == null || user.getRole().isBlank()) {
             user.setRole("USER");
@@ -34,18 +41,24 @@ public class UserService {
 
     public User loginUser(String email, String password) {
 
-        User user = userRepository.findByEmail(email)
+        if (email == null || email.isBlank()
+                || password == null || password.isBlank()) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Email and password are required");
+        }
+
+        User user = userRepository.findByEmail(
+                email.trim().toLowerCase())
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.UNAUTHORIZED,
-                        "Invalid email or password"
-                ));
+                        "Invalid email or password"));
 
         if (user.getPassword() == null
                 || !user.getPassword().equals(password)) {
             throw new ResponseStatusException(
                     HttpStatus.UNAUTHORIZED,
-                    "Invalid email or password"
-            );
+                    "Invalid email or password");
         }
 
         return user;

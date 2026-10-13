@@ -1,3 +1,4 @@
+
 package com.complaint.management.controller;
 
 import org.springframework.http.HttpStatus;
@@ -17,7 +18,8 @@ import com.complaint.management.service.UserService;
 @CrossOrigin(origins = {
     "http://localhost:5173",
     "http://localhost:5174",
-    "https://complaint-management-frontend-rose.vercel.app"
+    "https://complaint-management-frontend-rose.vercel.app",
+    "https://complaint-management-frontend-548drn90b-kommineniyugandhar01.vercel.app"
 })
 public class UserController {
 
@@ -35,6 +37,7 @@ public class UserController {
         if (user.getName() == null || user.getName().isBlank()
                 || user.getEmail() == null || user.getEmail().isBlank()
                 || user.getPassword() == null || user.getPassword().isBlank()) {
+
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
                     "Name, email, and password are required"
@@ -54,6 +57,7 @@ public class UserController {
 
         if (user.getEmail() == null || user.getEmail().isBlank()
                 || user.getPassword() == null || user.getPassword().isBlank()) {
+
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
                     "Email and password are required"

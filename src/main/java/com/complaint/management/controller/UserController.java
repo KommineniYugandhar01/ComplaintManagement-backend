@@ -19,7 +19,8 @@ import com.complaint.management.service.UserService;
     "http://localhost:5173",
     "http://localhost:5174",
     "https://complaint-management-frontend-rose.vercel.app",
-    "https://complaint-management-frontend-548drn90b-kommineniyugandhar01.vercel.app"
+    "https://complaint-management-frontend-548drn90b-kommineniyugandhar01.vercel.app",
+    "https://complaint-management-frontend-cqrq4uiyo-kommineniyugandhar01.vercel.app"
 })
 public class UserController {
 
@@ -29,10 +30,8 @@ public class UserController {
         this.userService = userService;
     }
 
-    // Register a new user
     @PostMapping("/register")
-    public ResponseEntity<User> registerUser(
-            @RequestBody User user) {
+    public ResponseEntity<User> registerUser(@RequestBody User user) {
 
         if (user.getName() == null || user.getName().isBlank()
                 || user.getEmail() == null || user.getEmail().isBlank()
@@ -50,10 +49,8 @@ public class UserController {
                 .body(registeredUser);
     }
 
-    // Log in an existing user
     @PostMapping("/login")
-    public ResponseEntity<User> loginUser(
-            @RequestBody User user) {
+    public ResponseEntity<User> loginUser(@RequestBody User user) {
 
         if (user.getEmail() == null || user.getEmail().isBlank()
                 || user.getPassword() == null || user.getPassword().isBlank()) {
